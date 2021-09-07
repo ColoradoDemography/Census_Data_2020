@@ -7,10 +7,96 @@
     <link rel="stylesheet" href="css/app.css">
     <script src="https://js.arcgis.com/4.20/"></script>
     <script src="js/app.js"></script>
+    <script language="javascript" type="text/javascript">
+    function dynamicdropdown(listindex)
+    {
+        switch (listindex)
+        {
+        case "Race" :
+            document.getElementById("status").options[0]=new Option("Hispanic","Hisp");
+            document.getElementById("status").options[1]=new Option("White Non-Hispanic","WhiteNH");
+            document.getElementById("status").options[2]=new Option("Black Non-Hispanic","BlackNH");
+            document.getElementById("status").options[3]=new Option("Native American Non-Hispanic","NANH");
+            document.getElementById("status").options[4]=new Option("Asian/Pacific Non-Hispanic","APNH");
+            document.getElementById("status").options[5]=new Option("Other Non-Hispanic","OtherNH");
+            document.getElementById("status").options[6]=new Option("Multi Non-Hispanic","MultiNH");
+            document.getElementById("status").options[8]=null;
+            document.getElementById("status").options[7]=null;
+            break;
+        case "Age" :
+            document.getElementById("status").options[0]=new Option("Under 18","U18");
+            document.getElementById("status").options[1]=new Option("18 and Older","O18");
+            document.getElementById("status").options[8]=null;
+            document.getElementById("status").options[7]=null;
+            document.getElementById("status").options[6]=null;
+            document.getElementById("status").options[5]=null;
+            document.getElementById("status").options[4]=null;
+            document.getElementById("status").options[3]=null;
+            document.getElementById("status").options[2]=null;
+            break;
+        case "Housing" :
+            document.getElementById("status").options[0]=new Option("Housing Units","HU");
+            document.getElementById("status").options[1]=new Option("Vacant","VACANT");
+            document.getElementById("status").options[8]=null;
+            document.getElementById("status").options[7]=null;
+            document.getElementById("status").options[6]=null;
+            document.getElementById("status").options[5]=null;
+            document.getElementById("status").options[4]=null;
+            document.getElementById("status").options[3]=null;
+            document.getElementById("status").options[2]=null;
+            break;
+        case "GQ" :
+            document.getElementById("status").options[0]=new Option("Group Quarters Pop","GQPOP");
+            document.getElementById("status").options[1]=new Option("Institutionalized","INST");
+            document.getElementById("status").options[2]=new Option("Correctional Facility","CORR");
+            document.getElementById("status").options[3]=new Option("Juvenile Facility","JUV");
+            document.getElementById("status").options[4]=new Option("Nursing Home","NURSE");
+            document.getElementById("status").options[5]=new Option("Non-Institutionalized","NONINST");
+            document.getElementById("status").options[6]=new Option("College Housing","COLLEGE");
+            document.getElementById("status").options[7]=new Option("Military Housing","MILITARY");
+            document.getElementById("status").options[8]=new Option("Other Non-Institutionalized","OTHERNI");
+            break;
+        }
+        return true;
+    }
+  </script>
   </head>
 
   <body>
     <div id="viewDiv"></div>
-    <div id="sidebar" class="esri-widget"></div>
+    <div id="sidebar" class="esri-widget">
+      <div id="menus">
+        <div id="geoDiv" class="esri-widget">
+          Select Geography:
+          <select id="geo-select" class="esri-widget">
+            <option value="County" selected>County</option>
+            <option value="Place">Place</option>
+            <option value="Tract">Tract</option>
+            <option value="Block Group">Block Group</option>
+          </select>
+        </div>
+        <div id="catDiv" class="esri-widget">
+          Select Data Category:
+          <select id="geo-select" class="esri-widget" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+            <option value="Age" selected>Age</option>
+            <option value="Race">Race and Ethnicity</option>
+            <option value="Housing">Housing</option>
+            <option value="GQ">Group Quarters</option>
+          </select>
+        </div>
+        <div class="statDiv" id="statDiv">Stat:
+          <script type="text/javascript" language="JavaScript">
+          document.write('<select name="status" id="status"><option value="">Select Stat</option></select>')
+          </script>
+          <noscript>
+          <select id="status" name="status">
+              <option value="U18">Under 18</option>
+              <option value="O18">18 and Older</option>
+          </select>
+          </noscript>
+        </div>
+      </div>
+      <div id="infodiv"></div>
+    </div>
   </body>
 </html>

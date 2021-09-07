@@ -40,7 +40,7 @@ require([
 
       // Provide graphic to a new instance of a Feature widget
       const feature = new Feature({
-        container: "sidebar",
+        //container: "infodiv", Temporary to stop popup
         graphic: graphic,
         map: view.map,
         spatialReference: view.spatialReference
