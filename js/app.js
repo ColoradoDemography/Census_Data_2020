@@ -1,30 +1,34 @@
 require([
     "esri/WebMap",
+    "esri/Basemap",
     "esri/layers/FeatureLayer",
     "esri/views/MapView",
     "esri/widgets/Feature"
-  ], function (WebMap, FeatureLayer, MapView, Feature) {
-    const fLayer = new FeatureLayer({
+  ], function (WebMap, Basemap, FeatureLayer, MapView, Feature) {
+/*     const fLayer = new FeatureLayer({
       portalItem: {
         id: "f430d25bf03744edbb1579e18c4bf6b8"
       },
       layerId: 2,
       outFields: ["*"]
+    }); */
+
+    var fLayer = new FeatureLayer({
+      title: "County Data",
+      url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Census_2020_Redistricting_Counties/FeatureServer/0"
     });
 
+    let grayBasemap = Basemap.fromId("gray-vector");
     const map = new WebMap({
-      portalItem: {
-        // autocasts as new PortalItem
-        id: "372b7caa8fe340b0a6300df93ef18a7e"
-      },
+      basemap: grayBasemap,
       layers: [fLayer]
     });
 
     const view = new MapView({
       container: "viewDiv",
       map: map,
-      center: [-74, 41.5],
-      zoom: 10,
+      center: [-105.8, 39.202], // longitude, latitude
+      zoom: 6,
       popup: {
         autoOpenEnabled: false
       }
@@ -40,7 +44,7 @@ require([
 
       // Provide graphic to a new instance of a Feature widget
       const feature = new Feature({
-        //container: "infodiv", Temporary to stop popup
+        container: "infodiv", 
         graphic: graphic,
         map: view.map,
         spatialReference: view.spatialReference

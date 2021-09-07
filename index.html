@@ -59,6 +59,7 @@
         }
         return true;
     }
+    
   </script>
   </head>
 
@@ -67,7 +68,7 @@
     <div id="sidebar" class="esri-widget">
       <div id="menus">
         <div id="geoDiv" class="esri-widget">
-          Select Geography:
+          Geography:
           <select id="geo-select" class="esri-widget">
             <option value="County" selected>County</option>
             <option value="Place">Place</option>
@@ -76,7 +77,7 @@
           </select>
         </div>
         <div id="catDiv" class="esri-widget">
-          Select Data Category:
+          Data Category:
           <select id="geo-select" class="esri-widget" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
             <option value="Age" selected>Age</option>
             <option value="Race">Race and Ethnicity</option>
@@ -86,14 +87,14 @@
         </div>
         <div class="statDiv" id="statDiv">Stat:
           <script type="text/javascript" language="JavaScript">
-          document.write('<select name="status" id="status"><option value="">Select Stat</option></select>')
+          document.write('<select name="status" id="status"><option value="U18">Under 18</option><option value="O18">18 and Older</option></select>')
           </script>
           <noscript>
-          <select id="status" name="status">
+           <select id="status" name="status">
               <option value="U18">Under 18</option>
               <option value="O18">18 and Older</option>
           </select>
-          </noscript>
+        </noscript>
         </div>
       </div>
       <div id="infodiv"></div>
