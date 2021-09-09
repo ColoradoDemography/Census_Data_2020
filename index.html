@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>View padding | Sample | ArcGIS API for JavaScript 4.20</title>
+    <title>2020 Census Data</title>
     <link rel="stylesheet" href="https://js.arcgis.com/4.20/esri/themes/light/main.css" />
     <link rel="stylesheet" href="css/app.css">
     <script src="https://js.arcgis.com/4.20/"></script>
@@ -69,7 +69,7 @@
       <div id="menus">
         <div id="geoDiv" class="esri-widget">
           Geography:
-          <select id="geo-select" class="esri-widget">
+          <select id="geoselect" class="esri-widget">
             <option value="County" selected>County</option>
             <option value="Place">Place</option>
             <option value="Tract">Tract</option>
@@ -78,7 +78,7 @@
         </div>
         <div id="catDiv" class="esri-widget">
           Data Category:
-          <select id="geo-select" class="esri-widget" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+          <select id="catselect" class="esri-widget" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
             <option value="Age" selected>Age</option>
             <option value="Race">Race and Ethnicity</option>
             <option value="Housing">Housing</option>
@@ -87,11 +87,11 @@
         </div>
         <div class="statDiv" id="statDiv">Stat:
           <script type="text/javascript" language="JavaScript">
-          document.write('<select name="status" id="status"><option value="U18">Under 18</option><option value="O18">18 and Older</option></select>')
+          document.write('<select id="statselect" class="esri-widget"><option value="U18" selected>Under 18</option><option value="O18">18 and Older</option></select>')
           </script>
           <noscript>
-           <select id="status" name="status">
-              <option value="U18">Under 18</option>
+           <select id="statselect" class="esri-widget">
+              <option value="U18" selected>Under 18</option>
               <option value="O18">18 and Older</option>
           </select>
         </noscript>
