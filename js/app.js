@@ -63,18 +63,59 @@ require([
       label: "> 26%"
     }); 
 
-    var popuptest = {
-      title: "{NAMELSAD20}",
-      content:
-      "<b>Total Population</b>  {TOTALPOP}<br>"+
-      "<b>Under 18 Population</b>  {$feature.TOTALPOP - $feature.POP18}, {(($feature.TOTALPOP - $feature.POP18)/$feature.TOTALPOP)*100}%<br>"+
-      "<b>18 and Older Population</b>  {POP18}, {($feature.POP18/$feature.TOTALPOP)*100}%<br>"
+    let outlinerenderer = {
+      type: "simple",  // autocasts as new SimpleRenderer()
+      symbol: {
+        type: "simple-fill",
+        style: "none",
+        color: "black",
+        outline: {  // autocasts as new SimpleLineSymbol()
+          width: 2,
+          color: "black"
+        }
+      }
     };
 
+    //default popup
+    var popupage = {
+      title: "{NAMELSAD20}",
+      content:
+        "<b>Total Population:</b>  {expression/pop}<br><br>"+
+        "<b>Under 18 Population:</b>  {expression/under18}<br>"+
+        "<b>Percent Under 18:</b>  {expression/under18pct}%<br><br>"+
+        "<b>18 and Older Population:</b>  {expression/over18}<br>"+
+        "<b>Percent 18 and Older:</b>  {expression/over18pct}%",
+      expressionInfos: [{
+        name: "under18",
+        expression: "Text($feature.TOTALPOP-$feature.POP18, '#,###')"
+      },{
+        name: "over18",
+        expression: "Text($feature.POP18, '#,###')"
+      },{
+        name: "pop",
+        expression: "Text($feature.TOTALPOP, '#,###')"
+      },{
+        name: "under18pct",
+        expression: "Round((($feature.TOTALPOP-$feature.POP18)/$feature.TOTALPOP)*100,2)"
+      },{
+        name: "over18pct",
+        expression: "Round(($feature.POP18/$feature.TOTALPOP)*100,2)"
+      }]
+    };
+
+    var countyOutline = new FeatureLayer({
+      title: "County Outline",
+      url: "https://services.arcgis.com/IamIM3RJ5xHykalK/arcgis/rest/services/Census_County_Data_2020/FeatureServer/0",
+      popupEnabled: false,
+      renderer: outlinerenderer
+    })
+    
     var countyLayer = new FeatureLayer({
       title: "Counties",
       url: "https://services.arcgis.com/IamIM3RJ5xHykalK/arcgis/rest/services/Census_County_Data_2020/FeatureServer/0",
       renderer: u18renderer,
+      popupTemplate: popupage,
+      opacity: .75,
       visible: true
 
     });
@@ -82,7 +123,8 @@ require([
       title: "Census Places",
       url: "https://services.arcgis.com/IamIM3RJ5xHykalK/arcgis/rest/services/Census_Place_Data_2020/FeatureServer/0",
       renderer: u18renderer,
-      //popupTemplate: popuptest,
+      popupTemplate: popupage,
+      opacity: .75,
       visible: false
 
     });
@@ -90,19 +132,23 @@ require([
       title: "Census Tracts",
       url: "https://services.arcgis.com/IamIM3RJ5xHykalK/arcgis/rest/services/Census_Tract_Data_2020/FeatureServer/0",
       renderer: u18renderer,
+      popupTemplate: popupage,
+      opacity: .75,
       visible: false
     });
     var bgLayer = new FeatureLayer({
       title: "Block Groups",
       url: "https://services.arcgis.com/IamIM3RJ5xHykalK/arcgis/rest/services/Census_BG_Data_2020/FeatureServer/0",
       renderer: u18renderer,
+      popupTemplate: popupage,
+      opacity: .75,
       visible: false
     });
 
-    let grayBasemap = Basemap.fromId("gray-vector");
+    let grayBasemap = Basemap.fromId("streets-vector");
     const map = new WebMap({
       basemap: grayBasemap,
-      layers: [countyLayer, placeLayer, tractLayer, bgLayer]
+      layers: [countyLayer, placeLayer, tractLayer, bgLayer, countyOutline]
     });
 
     const view = new MapView({
@@ -185,6 +231,7 @@ require([
     function generateRenderer() {
       //variables for case statements to select renderers
       const geoLabel = geoselect.options[geoselect.selectedIndex].value;
+      const catLabel = catselect.options[catselect.selectedIndex].value;
       const statLabel = statselect.options[statselect.selectedIndex].value;
       
       // Renderers
@@ -675,7 +722,187 @@ require([
         label: "Yes"
       });
       // Popups  
-      
+      var popuprace = {
+        title: "{NAMELSAD20}",
+        content:
+          "<b>Total Population:</b>  {expression/pop}<br><br>"+
+          "<b>Hispanic Population:</b>  {expression/hisp}<br>"+
+          "<b>Percent Hispanic</b>  {expression/hisppct}%<br><br>"+
+          "<b>Non-Hispanic White Population:</b>  {expression/white}<br>"+
+          "<b>Percent Non-Hispanic White:</b>  {expression/whitepct}%<br><br>"+
+          "<b>Non-Hispanic Black Population:</b>  {expression/black}<br>"+
+          "<b>Percent Non-Hispanic Black:</b>  {expression/blackpct}%<br><br>"+
+          "<b>Non-Hispanic American Indian Population:</b>  {expression/ameri}<br>"+
+          "<b>Percent Non-Hispanic American Indian:</b>  {expression/ameripct}%<br><br>"+
+          "<b>Non-Hispanic Asian/Pacific Islander Population:</b>  {expression/asian}<br>"+
+          "<b>Percent Non-Hispanic Asian/Pacific Islander:</b>  {expression/asianpct}%<br><br>"+
+          "<b>Other Race:</b>  {expression/other}<br>"+
+          "<b>Percent Other Race:</b>  {expression/otherpct}%<br><br>"+
+          "<b>Non-Hispanic Multiple Races:</b>  {expression/multi}<br>"+
+          "<b>Percent Non-Hispanic Multiple Races:</b>  {expression/multipct}%<br><br>",
+        expressionInfos: [{
+          name: "pop",
+          expression: "Text($feature.TOTALPOP, '#,###')"
+        },{
+          name: "hisp",
+          expression: "Text($feature.HISPANIC, '#,###')"
+        },{
+          name: "hisppct",
+          expression: "Round((($feature.HISPANIC)/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "white",
+          expression: "Text($feature.NHWHITE, '#,###')"
+        },{
+          name: "whitepct",
+          expression: "Round(($feature.NHWHITE/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "black",
+          expression: "Text($feature.NHBLACK, '#,###')"
+        },{
+          name: "blackpct",
+          expression: "Round(($feature.NHBLACK/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "ameri",
+          expression: "Text($feature.NHAMERI, '#,###')"
+        },{
+          name: "ameripct",
+          expression: "Round(($feature.NHAMERI/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "asian",
+          expression: "Text($feature.NHASIAN + $feature.NHPI, '#,###')"
+        },{
+          name: "asianpct",
+          expression: "Round((($feature.NHASIAN + $feature.NHPI)/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "other",
+          expression: "Text($feature.OTHERALONE, '#,###')"
+        },{
+          name: "otherpct",
+          expression: "Round(($feature.OTHERALONE/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "multi",
+          expression: "Text($feature.MULTIALONE, '#,###')"
+        },{
+          name: "multipct",
+          expression: "Round(($feature.MULTIALONE/$feature.TOTALPOP)*100,2)"
+        }]
+      };
+
+      var popuphouse = {
+        title: "{NAMELSAD20}",
+        content:
+          "<b>Total Housing Units:</b>  {expression/house}<br><br>"+
+          "<b>Occupied:</b>  {expression/occ}<br>"+
+          "<b>Percent Occupied:</b>  {expression/occpct}%<br><br>"+
+          "<b>Vacant:</b>  {expression/vac}<br>"+
+          "<b>Percent Vacant:</b>  {expression/vacpct}%",
+        expressionInfos: [{
+          name: "house",
+          expression: "Text($feature.HOUSEUNIT, '#,###')"
+        },{
+          name: "occ",
+          expression: "Text($feature.OCCUPIED, '#,###')"
+        },{
+          name: "vac",
+          expression: "Text($feature.VACANT, '#,###')"
+        },{
+          name: "occpct",
+          expression: "Round((($feature.OCCUPIED)/$feature.HOUSEUNIT)*100,2)"
+        },{
+          name: "vacpct",
+          expression: "Round(($feature.VACANT/$feature.HOUSEUNIT)*100,2)"
+        }]
+      };
+
+      var popupgq = {
+        title: "{NAMELSAD20}",
+        content:
+          "<b>Total Population:</b>  {expression/pop}<br>"+
+          "<b>Group Quarters Population:</b>  {expression/gq}<br>"+
+          "<b>Percent of Total Population:</b>  {expression/gqpct}%<br><br>"+
+          "<b>Instituionalized Population:</b>  {expression/inst}<br>"+
+          "<b>Percent of Total Population:</b>  {expression/instpct}%<br><br>"+
+          "<b>Correctional Facility Population:</b>  {expression/corr}<br>"+
+          "<b>Percent of Total Population:</b>  {expression/corrpct}%<br><br>"+
+          "<b>Juvenile Detention Population:</b>  {expression/juv}<br>"+
+          "<b>Percent of Total Population:</b>  {expression/juvpct}%<br><br>"+
+          "<b>Nursing Home Population:</b>  {expression/nurse}<br>"+
+          "<b>Percent of Total Population:</b>  {expression/nursepct}%<br><br>"+
+          "<b>Other Instituionalized Population:</b>  {expression/oinst}<br>"+
+          "<b>Percent of Total Population:</b>  {expression/oinstpct}%<br><br>"+
+          "<b>Non-Institutionalized Population:</b>  {expression/ninst}<br>"+
+          "<b>Percent of Total Population:</b>  {expression/ninstpct}%<br><br>"+
+          "<b>College Housing Population:</b>  {expression/coll}<br>"+
+          "<b>Percent of Total Population:</b>  {expression/collpct}%<br><br>"+
+          "<b>Military Housing Population:</b>  {expression/mil}<br>"+
+          "<b>Percent of Total Population:</b>  {expression/milpct}%<br><br>"+
+          "<b>Other Non-Institutionalized Population:</b>  {expression/oninst}<br>"+
+          "<b>Percent of Total Population:</b>  {expression/oninstpct}%<br><br>",
+        expressionInfos: [{
+          name: "pop",
+          expression: "Text($feature.TOTALPOP, '#,###')"
+        },{
+          name: "gq",
+          expression: "Text($feature.GQPOP, '#,###')"
+        },{
+          name: "gqpct",
+          expression: "Round((($feature.GQPOP)/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "inst",
+          expression: "Text($feature.INSTITPOP, '#,###')"
+        },{
+          name: "instpct",
+          expression: "Round((($feature.INSTITPOP)/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "corr",
+          expression: "Text($feature.CORRPOP, '#,###')"
+        },{
+          name: "corrpct",
+          expression: "Round(($feature.CORRPOP/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "juv",
+          expression: "Text($feature.JUVPOP, '#,###')"
+        },{
+          name: "juvpct",
+          expression: "Round(($feature.JUVPOP/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "nurse",
+          expression: "Text($feature.NURSINGPOP, '#,###')"
+        },{
+          name: "nursepct",
+          expression: "Round(($feature.NURSINGPOP/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "oinst",
+          expression: "Text($feature.OINSTITPOP, '#,###')"
+        },{
+          name: "oinstpct",
+          expression: "Round((($feature.OINSTITPOP)/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "ninst",
+          expression: "Text($feature.NONINSTPOP, '#,###')"
+        },{
+          name: "ninstpct",
+          expression: "Round(($feature.NONINSTPOP/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "coll",
+          expression: "Text($feature.COLLEGEPOP, '#,###')"
+        },{
+          name: "collpct",
+          expression: "Round(($feature.COLLEGEPOP/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "mil",
+          expression: "Text($feature.MILITPOP, '#,###')"
+        },{
+          name: "milpct",
+          expression: "Round(($feature.MILITPOP/$feature.TOTALPOP)*100,2)"
+        },{
+          name: "oninst",
+          expression: "Text($feature.ONINSTITPO, '#,###')"
+        },{
+          name: "oninstpct",
+          expression: "Round(($feature.ONINSTITPO/$feature.TOTALPOP)*100,2)"
+        }]
+      };
 
       //console.log(geoLabel);
       switch (geoLabel){
@@ -702,6 +929,33 @@ require([
           placeLayer.visible = false;
           tractLayer.visible = false;
           bgLayer.visible = true;
+          break;
+      }
+
+      switch (catLabel){
+        case "Age":
+          countyLayer.popupTemplate = popupage;
+          placeLayer.popupTemplate = popupage;
+          tractLayer.popupTemplate = popupage;
+          bgLayer.popupTemplate = popupage;
+          break;
+        case "Race":
+          countyLayer.popupTemplate = popuprace;
+          placeLayer.popupTemplate = popuprace;
+          tractLayer.popupTemplate = popuprace;
+          bgLayer.popupTemplate = popuprace;
+          break;
+        case "Housing":
+          countyLayer.popupTemplate = popuphouse;
+          placeLayer.popupTemplate = popuphouse;
+          tractLayer.popupTemplate = popuphouse;
+          bgLayer.popupTemplate = popuphouse;
+          break;
+        case "GQ":
+          countyLayer.popupTemplate = popupgq;
+          placeLayer.popupTemplate = popupgq;
+          tractLayer.popupTemplate = popupgq;
+          bgLayer.popupTemplate = popupgq;
           break;
       }
 
