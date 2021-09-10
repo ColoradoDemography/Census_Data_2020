@@ -8,18 +8,18 @@
     <script src="https://js.arcgis.com/4.20/"></script>
     <script src="js/app.js"></script>
     <script language="javascript" type="text/javascript">
-    function dynamicdropdown(listindex)
+/*     function dynamicdropdown(listindex)
     {
         switch (listindex)
         {
         case "Race" :
-            document.getElementById("status").options[0]=new Option("Hispanic","Hisp");
-            document.getElementById("status").options[1]=new Option("White Non-Hispanic","WhiteNH");
-            document.getElementById("status").options[2]=new Option("Black Non-Hispanic","BlackNH");
+            document.getElementById("status").options[0]=new Option("Hispanic","HISP");
+            document.getElementById("status").options[1]=new Option("White Non-Hispanic","WHITE");
+            document.getElementById("status").options[2]=new Option("Black Non-Hispanic","BLACK");
             document.getElementById("status").options[3]=new Option("Native American Non-Hispanic","NANH");
             document.getElementById("status").options[4]=new Option("Asian/Pacific Non-Hispanic","APNH");
-            document.getElementById("status").options[5]=new Option("Other Non-Hispanic","OtherNH");
-            document.getElementById("status").options[6]=new Option("Multi Non-Hispanic","MultiNH");
+            document.getElementById("status").options[5]=new Option("Other Non-Hispanic","OTHER");
+            document.getElementById("status").options[6]=new Option("Multi Non-Hispanic","MULTI");
             document.getElementById("status").options[8]=null;
             document.getElementById("status").options[7]=null;
             break;
@@ -58,6 +58,51 @@
             break;
         }
         return true;
+    } */
+
+    function configureDropDownLists(catselect,statselect) {
+      racemenu = ['Hispanic', 'Non-Hispanic White', 'Non-Hispanic Black', 'Non-Hispanic Native American', 'Non-Hispanic Asian/Pacific Islander', 'Other Race', 'Multiple Races'];
+      racevalue = ['HISP', 'WHITE', 'BLACK', 'NANH', 'APNH', 'OTHER', 'MULTI'];
+      agemenu = ['Under 18', '18 and Older'];
+      agevalue = ['U18', 'O18'];
+      housemenu = ['Vacant Housing Units'];
+      housevalue = ['VACANT'];
+      gqmenu = ['Group Quarters', 'Institutionalized', 'Correctional Facility', 'Juvenile Facility', 'Nursing Home', 'Other Institutionalized', 'Non-Institutionalized', 'College Housing', 'Military Housing', 'Other Non-Institutionalized'];
+      gqvalue = ['GQPOP', 'INSTITPOP', 'CORRPOP', 'JUVPOP', 'NURSINGPOP', 'OINSTITPOP', 'NONINSTPOP', 'COLLEGEPOP', 'MILITPOP', 'ONINSTITPO'];
+
+      switch (catselect.value){
+        case 'Age':
+          statselect.options.length = 0;
+          for (i = 0; i < agemenu.length; i++) {
+            createOption(statselect, agemenu[i], agevalue[i]);
+          }
+          break;
+        case 'Race':
+          statselect.options.length = 0;
+          for (i = 0; i < racemenu.length; i++) {
+            createOption(statselect, racemenu[i], racevalue[i]);
+          }
+          break;
+        case 'Housing':
+          statselect.options.length = 0;
+          for (i = 0; i < housemenu.length; i++) {
+            createOption(statselect, housemenu[i], housevalue[i]);
+          }
+          break;
+        case 'GQ':
+          statselect.options.length = 0;
+          for (i = 0; i < gqmenu.length; i++) {
+            createOption(statselect, gqmenu[i], gqvalue[i]);
+          }
+          break;
+      }
+    }
+
+    function createOption(ddl, text, value) {
+        var opt = document.createElement('option');
+        opt.value = value;
+        opt.text = text;
+        ddl.options.add(opt);
     }
     
   </script>
@@ -78,7 +123,7 @@
         </div>
         <div id="catDiv" class="esri-widget">
           Data Category:
-          <select id="catselect" class="esri-widget" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+          <select id="catselect" class="esri-widget" onchange="configureDropDownLists(this,document.getElementById('statselect'))">
             <option value="Age" selected>Age</option>
             <option value="Race">Race and Ethnicity</option>
             <option value="Housing">Housing</option>
@@ -86,15 +131,16 @@
           </select>
         </div>
         <div class="statDiv" id="statDiv">Stat:
-          <script type="text/javascript" language="JavaScript">
+<!--           <script type="text/javascript" language="JavaScript">
           document.write('<select id="statselect" class="esri-widget"><option value="U18" selected>Under 18</option><option value="O18">18 and Older</option></select>')
-          </script>
-          <noscript>
+          </script> -->
+
            <select id="statselect" class="esri-widget">
               <option value="U18" selected>Under 18</option>
               <option value="O18">18 and Older</option>
           </select>
-        </noscript>
+
+
         </div>
       </div>
       <div id="infodiv"></div>
