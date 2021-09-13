@@ -145,7 +145,7 @@ require([
       visible: false
     });
 
-    let grayBasemap = Basemap.fromId("streets-vector");
+    let grayBasemap = Basemap.fromId("gray-vector");
     const map = new WebMap({
       basemap: grayBasemap,
       layers: [countyLayer, placeLayer, tractLayer, bgLayer, countyOutline]
@@ -155,7 +155,7 @@ require([
       container: "viewDiv",
       map: map,
       center: [-105.397803, 39.168709], // longitude, latitude
-      zoom: 6,
+      zoom: 7,
       popup: {
         autoOpenEnabled: true
       }
@@ -698,7 +698,7 @@ require([
       // GQ Renderer
       var gqrenderer = new ClassBreaksRenderer({
         type: "class-breaks",
-        field: statLabel,
+        valueExpression: "($feature."+ statLabel + "/$feature.TOTALPOP)*100",
         legendOptions: {
           title: statselect.options[statselect.selectedIndex].text + " Population"
         }
@@ -708,18 +708,46 @@ require([
         maxValue: 0,
         symbol: {
           type: "simple-fill",  
+          color: "#ffffff",
+          opacity: 1
+        },
+        label: "None"
+      });
+      gqrenderer.addClassBreakInfo({
+        minValue: 0.00000001,
+        maxValue: 1,
+        symbol: {
+          type: "simple-fill",  
           color: "#ffffcc"
         },
-        label: "No"
+        label: "< 1%"
       });
       gqrenderer.addClassBreakInfo({
         minValue: 1,
-        maxValue: 5000000,
+        maxValue: 2,
         symbol: {
           type: "simple-fill",  
-          color: "#e53226"
+          color: "#c2e699"
         },
-        label: "Yes"
+        label: "1% to 2%"
+      });
+      gqrenderer.addClassBreakInfo({
+        minValue: 2,
+        maxValue: 5,
+        symbol: {
+          type: "simple-fill",  
+          color: "#78c679"
+        },
+        label: "2% to 5%"
+      });
+      gqrenderer.addClassBreakInfo({
+        minValue: 5,
+        maxValue: 100,
+        symbol: {
+          type: "simple-fill",  
+          color: "#238443"
+        },
+        label: "> 5%"
       });
       // Popups  
       var popuprace = {
