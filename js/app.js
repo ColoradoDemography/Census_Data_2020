@@ -7,8 +7,11 @@ require([
     "esri/renderers/support/ClassBreakInfo",
     "esri/renderers/ClassBreaksRenderer",
     "esri/widgets/Legend",
-    "esri/widgets/Expand"
-  ], function (WebMap, Basemap, FeatureLayer, MapView, Feature, ClassBreakInfo, ClassBreaksRenderer, Legend, Expand) {
+    "esri/widgets/Expand",
+    "esri/popup/content/ColumnChartMediaInfo",
+    "esri/popup/content/PieChartMediaInfo",
+    "esri/popup/content/support/ChartMediaInfoValue"
+  ], function (WebMap, Basemap, FeatureLayer, MapView, Feature, ClassBreakInfo, ClassBreaksRenderer, Legend, Expand, ColumnChartMediaInfo, PieChartMediaInfo, ChartMediaInfoValue) {
   // Default renderer
     var u18renderer = new ClassBreaksRenderer({
       type: "class-breaks",
@@ -77,14 +80,61 @@ require([
     };
 
     //default popup
+
+    /* let ageChartValue = new ChartMediaInfoValue({
+      fields: [under18, "POP18"],
+      normalizeField: null,
+      tooltipField: "DISPNAME"
+    });
+
+    let ageChart = new PieChartMediaInfo({
+      title: "Chart title",
+      caption: "Chart subtitle",
+      value: ageChartValue
+    }); */
+
+    /* var arcadeExpressionInfos = [{
+      name: "under18",
+      expression: "Text($feature.TOTALPOP-$feature.POP18, '#,###')"
+    },{
+      name: "over18",
+      expression: "Text($feature.POP18, '#,###')"
+    },{
+      name: "pop",
+      expression: "Text($feature.TOTALPOP, '#,###')"
+    },{
+      name: "under18pct",
+      expression: "Round((($feature.TOTALPOP-$feature.POP18)/$feature.TOTALPOP)*100,2)"
+    },{
+      name: "over18pct",
+      expression: "Round(($feature.POP18/$feature.TOTALPOP)*100,2)"
+    }]; */
+
     var popupage = {
-      title: "{NAMELSAD20}",
-      content:
+      title: "{DISPNAME}",
+      content:[{
+        type: "text",
+        text:
         "<b>Total Population:</b>  {expression/pop}<br><br>"+
         "<b>Under 18 Population:</b>  {expression/under18}<br>"+
         "<b>Percent Under 18:</b>  {expression/under18pct}%<br><br>"+
         "<b>18 and Older Population:</b>  {expression/over18}<br>"+
-        "<b>Percent 18 and Older:</b>  {expression/over18pct}%",
+        "<b>Percent 18 and Older:</b>  {expression/over18pct}%"
+      },
+            {
+        type: "media",
+        mediaInfos: [
+          {
+            title: "<b>Count by type</b>",
+            type: "pie-chart",
+            caption: "",
+            value: {
+              fields: ["POPU18", "POP18"],
+              normalizeField: null,
+              tooltipField: "DISPNAME"
+            }
+          }]
+      }],
       expressionInfos: [{
         name: "under18",
         expression: "Text($feature.TOTALPOP-$feature.POP18, '#,###')"
@@ -102,6 +152,10 @@ require([
         expression: "Round(($feature.POP18/$feature.TOTALPOP)*100,2)"
       }]
     };
+
+    
+
+    //popupage.expressionInfos = arcadeExpressionInfos;
 
     var countyOutline = new FeatureLayer({
       title: "County Outline",
@@ -753,8 +807,10 @@ require([
       });
       // Popups  
       var popuprace = {
-        title: "{NAMELSAD20}",
-        content:
+        title: "{DISPNAME}",
+        content:[{
+          type: "text",
+          text:
           "<b>Total Population:</b>  {expression/pop}<br><br>"+
           "<b>Hispanic Population:</b>  {expression/hisp}<br>"+
           "<b>Percent Hispanic</b>  {expression/hisppct}%<br><br>"+
@@ -769,7 +825,21 @@ require([
           "<b>Other Race:</b>  {expression/other}<br>"+
           "<b>Percent Other Race:</b>  {expression/otherpct}%<br><br>"+
           "<b>Non-Hispanic Multiple Races:</b>  {expression/multi}<br>"+
-          "<b>Percent Non-Hispanic Multiple Races:</b>  {expression/multipct}%<br><br>",
+          "<b>Percent Non-Hispanic Multiple Races:</b>  {expression/multipct}%<br><br>"
+        },{
+          type: "media",
+          mediaInfos: [
+            {
+              title: "<b>Count by type</b>",
+              type: "column-chart",
+              caption: "",
+              value: {
+                fields: ["HISPANIC", "NHWHITE", "NHBLACK", "NHAMERI", "NHASIANPI", "OTHERALONE", "MULTIALONE"],
+                normalizeField: null,
+                tooltipField: "DISPNAME"
+              }
+            }]
+        }],
         expressionInfos: [{
           name: "pop",
           expression: "Text($feature.TOTALPOP, '#,###')"
