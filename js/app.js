@@ -145,6 +145,8 @@ require([
       visible: false
     });
 
+    var fLayer = countyLayer;
+
     let grayBasemap = Basemap.fromId("gray-vector");
     const map = new WebMap({
       basemap: grayBasemap,
@@ -157,7 +159,7 @@ require([
       center: [-105.397803, 39.168709], // longitude, latitude
       zoom: 6,
       popup: {
-        autoOpenEnabled: true
+        autoOpenEnabled: false
       }
     });
 
@@ -202,7 +204,7 @@ require([
         spatialReference: view.spatialReference
       });
 
-      /* view.whenLayerView(fLayer).then(function (layerView) {
+      view.whenLayerView(fLayer).then(function (layerView) {
         let highlight;
         // listen for the pointer-move event on the View
         view.on("pointer-move", function (event) {
@@ -224,7 +226,7 @@ require([
             }
           });
         });
-      }); */
+      });
     });
 
     //Create others depending on selected stat
@@ -939,24 +941,28 @@ require([
           placeLayer.visible = false;
           tractLayer.visible = false;
           bgLayer.visible = false;
+          fLayer = countyLayer;
           break;
         case "Place":
           countyLayer.visible = false;
           placeLayer.visible = true;
           tractLayer.visible = false;
           bgLayer.visible = false;
+          fLayer = placeLayer;
           break;
         case "Tract":
           countyLayer.visible = false;
           placeLayer.visible = false;
           tractLayer.visible = true;
           bgLayer.visible = false;
+          fLayer = tractLayer;
           break;
         case "Block Group":
           countyLayer.visible = false;
           placeLayer.visible = false;
           tractLayer.visible = false;
           bgLayer.visible = true;
+          fLayer = bgLayer;
           break;
       }
 
