@@ -12,7 +12,11 @@ require([
     "esri/popup/content/PieChartMediaInfo",
     "esri/popup/content/support/ChartMediaInfoValue"
   ], function (WebMap, Basemap, FeatureLayer, MapView, Feature, ClassBreakInfo, ClassBreaksRenderer, Legend, Expand, ColumnChartMediaInfo, PieChartMediaInfo, ChartMediaInfoValue) {
-  // Default renderer
+  
+    //Access infodiv for popups
+    var popdiv = document.getElementById("infodiv");
+  
+    // Default renderer
     var u18renderer = new ClassBreaksRenderer({
       type: "class-breaks",
       valueExpression: "100 - (($feature.POP18/$feature.TOTALPOP)*100)",
@@ -222,6 +226,10 @@ require([
       //Update the geography shown
       geoSelect = document.getElementById("geoDiv");
       geoSelect.addEventListener("change", generateRenderer);
+      geoSelect.addEventListener("change", hidediv);
+      function hidediv() {
+        popdiv.style.display = "none";
+      }
 
       catSelect = document.getElementById("catDiv");
       catSelect.addEventListener("change", generateRenderer);
@@ -252,6 +260,7 @@ require([
         view.on("click", function (event) {
           // Perform a hitTest on the View
           view.hitTest(event).then(function (event) {
+            popdiv.style.display = "initial";
             // Make sure graphic has a popupTemplate
             let results = event.results.filter(function (result) {
               return result.graphic.layer.popupTemplate;
@@ -822,7 +831,7 @@ require([
               type: "column-chart",
               caption: "",
               value: {
-                fields: ["HISPANIC", "NHWHITE", "NHBLACK", "NHAMERI", "NHASIANPI", "OTHERALONE", "MULTIALONE"],
+                fields: ["HISPANIC", "NHWHITE", "NHBLACK", "NHAMERI", "expression/asiannum", "OTHERALONE", "MULTIALONE"],
                 normalizeField: null,
                 tooltipField: "DISPNAME"
               }
@@ -858,6 +867,9 @@ require([
         },{
           name: "asian",
           expression: "Text($feature.NHASIAN + $feature.NHPI, '#,###')"
+        },{
+          name: "asiannum",
+          expression: "$feature.NHASIAN + $feature.NHPI"
         },{
           name: "asianpct",
           expression: "Round((($feature.NHASIAN + $feature.NHPI)/$feature.TOTALPOP)*100,2)"
@@ -1007,7 +1019,6 @@ require([
           tractLayer.visible = false;
           bgLayer.visible = false;
           fLayer = placeLayer;
-          view.popup.close();
           break;
         case "Tract":
           countyLayer.visible = false;
@@ -1015,7 +1026,6 @@ require([
           tractLayer.visible = true;
           bgLayer.visible = false;
           fLayer = tractLayer;
-          view.popup.close();
           break;
         case "Block Group":
           countyLayer.visible = false;
@@ -1023,7 +1033,6 @@ require([
           tractLayer.visible = false;
           bgLayer.visible = true;
           fLayer = bgLayer;
-          view.popup.close();
           break;
       }
 
