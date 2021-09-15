@@ -79,37 +79,6 @@ require([
       }
     };
 
-    //default popup
-
-    /* let ageChartValue = new ChartMediaInfoValue({
-      fields: [under18, "POP18"],
-      normalizeField: null,
-      tooltipField: "DISPNAME"
-    });
-
-    let ageChart = new PieChartMediaInfo({
-      title: "Chart title",
-      caption: "Chart subtitle",
-      value: ageChartValue
-    }); */
-
-    /* var arcadeExpressionInfos = [{
-      name: "under18",
-      expression: "Text($feature.TOTALPOP-$feature.POP18, '#,###')"
-    },{
-      name: "over18",
-      expression: "Text($feature.POP18, '#,###')"
-    },{
-      name: "pop",
-      expression: "Text($feature.TOTALPOP, '#,###')"
-    },{
-      name: "under18pct",
-      expression: "Round((($feature.TOTALPOP-$feature.POP18)/$feature.TOTALPOP)*100,2)"
-    },{
-      name: "over18pct",
-      expression: "Round(($feature.POP18/$feature.TOTALPOP)*100,2)"
-    }]; */
-
     var popupage = {
       title: "{DISPNAME}",
       content:[{
@@ -126,10 +95,10 @@ require([
         mediaInfos: [
           {
             title: "<b>Count by type</b>",
-            type: "pie-chart",
+            type: "column-chart",
             caption: "",
             value: {
-              fields: ["POPU18", "POP18"],
+              fields: ["expression/under18num", "POP18"],
               normalizeField: null,
               tooltipField: "DISPNAME"
             }
@@ -138,6 +107,9 @@ require([
       expressionInfos: [{
         name: "under18",
         expression: "Text($feature.TOTALPOP-$feature.POP18, '#,###')"
+      },{
+        name: "under18num",
+        expression: "$feature.TOTALPOP-$feature.POP18"
       },{
         name: "over18",
         expression: "Text($feature.POP18, '#,###')"
@@ -150,10 +122,26 @@ require([
       },{
         name: "over18pct",
         expression: "Round(($feature.POP18/$feature.TOTALPOP)*100,2)"
+      }],
+      fieldInfos: [{
+        fieldName: "TOTALPOP",
+        format: {
+          digitSeparator: true,
+          places: 0
+          },
+      fieldName: "POP18",
+          format: {
+            digitSeparator: true,
+            places: 0
+            }
       }]
     };
 
-    
+    function u18(feature){
+      let u18tot = feature.graphics.attributes.TOTALPOP - feature.graphics.attributes.POP18;
+      return u18tot;
+    }
+
 
     //popupage.expressionInfos = arcadeExpressionInfos;
 
@@ -261,7 +249,7 @@ require([
       view.whenLayerView(fLayer).then(function (layerView) {
         let highlight;
         // listen for the pointer-move event on the View
-        view.on("pointer-move", function (event) {
+        view.on("click", function (event) {
           // Perform a hitTest on the View
           view.hitTest(event).then(function (event) {
             // Make sure graphic has a popupTemplate
@@ -1019,6 +1007,7 @@ require([
           tractLayer.visible = false;
           bgLayer.visible = false;
           fLayer = placeLayer;
+          view.popup.close();
           break;
         case "Tract":
           countyLayer.visible = false;
@@ -1026,6 +1015,7 @@ require([
           tractLayer.visible = true;
           bgLayer.visible = false;
           fLayer = tractLayer;
+          view.popup.close();
           break;
         case "Block Group":
           countyLayer.visible = false;
@@ -1033,6 +1023,7 @@ require([
           tractLayer.visible = false;
           bgLayer.visible = true;
           fLayer = bgLayer;
+          view.popup.close();
           break;
       }
 
