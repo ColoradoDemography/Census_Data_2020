@@ -98,13 +98,13 @@ require([
         type: "media",
         mediaInfos: [
           {
-            title: "<b>Count by type</b>",
+            title: "Population by Age",
             type: "column-chart",
             caption: "",
             value: {
               fields: ["expression/under18num", "POP18"],
               normalizeField: null,
-              tooltipField: "DISPNAME"
+              tooltipField: "TOOLTIP ON HOVER"
             }
           }]
       }],
