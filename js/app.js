@@ -98,11 +98,11 @@ require([
         type: "media",
         mediaInfos: [
           {
-            title: "Population by Age",
+            title: "Population by Age Group",
             type: "column-chart",
             caption: "",
             value: {
-              fields: ["expression/under18num", "POP18"],
+              fields: ["UNDER18", "POP18"],
               normalizeField: null,
               tooltipField: "TOOLTIP ON HOVER"
             }
@@ -827,13 +827,13 @@ require([
           type: "media",
           mediaInfos: [
             {
-              title: "<b>Count by type</b>",
+              title: "<b>Population by Race</b>",
               type: "column-chart",
               caption: "",
               value: {
-                fields: ["HISPANIC", "NHWHITE", "NHBLACK", "NHAMERI", "expression/asiannum", "OTHERALONE", "MULTIALONE"],
+                fields: ["HISPANIC", "NHWHITE", "NHBLACK", "NHAMERI", "NHASIANPI", "OTHERALONE", "MULTIALONE"],
                 normalizeField: null,
-                tooltipField: "DISPNAME"
+                tooltipField: ""
               }
             }]
         }],
@@ -890,12 +890,29 @@ require([
 
       var popuphouse = {
         title: "{NAMELSAD20}",
-        content:
+        content:[{
+          type: "text",
+          text:
           "<b>Total Housing Units:</b>  {expression/house}<br><br>"+
           "<b>Occupied:</b>  {expression/occ}<br>"+
           "<b>Percent Occupied:</b>  {expression/occpct}%<br><br>"+
           "<b>Vacant:</b>  {expression/vac}<br>"+
-          "<b>Percent Vacant:</b>  {expression/vacpct}%",
+          "<b>Percent Vacant:</b>  {expression/vacpct}%"
+        },{
+            type: "media",
+            mediaInfos: [
+              {
+                title: "<b>Occupancy Status</b>",
+                type: "pie-chart",
+                caption: "",
+                value: {
+                  fields: ["OCCUPIED", "VACANT"],
+                  normalizeField: null,
+                  tooltipField: ""
+                }
+              }]
+          }],
+
         expressionInfos: [{
           name: "house",
           expression: "Text($feature.HOUSEUNIT, '#,###')"
@@ -916,7 +933,9 @@ require([
 
       var popupgq = {
         title: "{NAMELSAD20}",
-        content:
+        content:[{
+          type: "text",
+          text:
           "<b>Total Population:</b>  {expression/pop}<br>"+
           "<b>Group Quarters Population:</b>  {expression/gq}<br>"+
           "<b>Percent of Total Population:</b>  {expression/gqpct}%<br><br>"+
@@ -937,7 +956,21 @@ require([
           "<b>Military Housing Population:</b>  {expression/mil}<br>"+
           "<b>Percent of Total Population:</b>  {expression/milpct}%<br><br>"+
           "<b>Other Non-Institutionalized Population:</b>  {expression/oninst}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/oninstpct}%<br><br>",
+          "<b>Percent of Total Population:</b>  {expression/oninstpct}%<br><br>"
+      },{
+            type: "media",
+            mediaInfos: [
+              {
+                title: "<b>Group Quarters Population by Type</b>",
+                type: "column-chart",
+                caption: "",
+                value: {
+                  fields: ["INSTITPOP", "CORRPOP", "JUVPOP", "NURSINGPOP", "OINSTITPOP", "COLLEGEPOP", "MILITPOP", "ONINSTITPO"],
+                  normalizeField: null,
+                  tooltipField: ""
+                }
+              }]
+          }],
         expressionInfos: [{
           name: "pop",
           expression: "Text($feature.TOTALPOP, '#,###')"
