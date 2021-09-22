@@ -10,8 +10,9 @@ require([
     "esri/widgets/Expand",
     "esri/popup/content/ColumnChartMediaInfo",
     "esri/popup/content/PieChartMediaInfo",
-    "esri/popup/content/support/ChartMediaInfoValue"
-  ], function (WebMap, Basemap, FeatureLayer, MapView, Feature, ClassBreakInfo, ClassBreaksRenderer, Legend, Expand, ColumnChartMediaInfo, PieChartMediaInfo, ChartMediaInfoValue) {
+    "esri/popup/content/support/ChartMediaInfoValue",
+    "esri/popup/content/FieldsContent"
+  ], function (WebMap, Basemap, FeatureLayer, MapView, Feature, ClassBreakInfo, ClassBreaksRenderer, Legend, Expand, ColumnChartMediaInfo, PieChartMediaInfo, ChartMediaInfoValue, FieldsContent) {
   
     //Access infodiv for popups
     var popdiv = document.getElementById("infodiv");
@@ -102,17 +103,33 @@ require([
     };
 
     var popupage = {
-      title: "{DISPNAME}",
+      title: "{NAMELSAD20}",
       content:[{
-        type: "text",
-        text:
-        "<b>Total Population:</b>  {expression/pop}<br><br>"+
-        "<b>Under 18 Population:</b>  {expression/under18}<br>"+
-        "<b>Percent Under 18:</b>  {expression/under18pct}%<br><br>"+
-        "<b>18 and Older Population:</b>  {expression/over18}<br>"+
-        "<b>Percent 18 and Older:</b>  {expression/over18pct}%"
-      },
-            {
+      type: "fields",
+            fieldInfos: [
+              {
+                fieldName: "TOTALPOP",
+                label: "Total Population",
+                format: {
+                  digitSeparator: true
+                }
+              },
+              {
+                fieldName: "UNDER18",
+                label: "Population Under 18",
+                format: {
+                  digitSeparator: true
+                }
+              },
+              {
+                fieldName: "POP18",
+                label: "Population 18 and Older",
+                format: {
+                  digitSeparator: true
+                }
+              }
+            ]
+      },{
         type: "media",
         mediaInfos: [
           {
@@ -820,25 +837,67 @@ require([
       });
       // Popups  
       var popuprace = {
-        title: "{DISPNAME}",
+        title: "{NAMELSAD20}",
         content:[{
-          type: "text",
-          text:
-          "<b>Total Population:</b>  {expression/pop}<br><br>"+
-          "<b>Hispanic Population:</b>  {expression/hisp}<br>"+
-          "<b>Percent Hispanic</b>  {expression/hisppct}%<br><br>"+
-          "<b>Non-Hispanic White Population:</b>  {expression/white}<br>"+
-          "<b>Percent Non-Hispanic White:</b>  {expression/whitepct}%<br><br>"+
-          "<b>Non-Hispanic Black Population:</b>  {expression/black}<br>"+
-          "<b>Percent Non-Hispanic Black:</b>  {expression/blackpct}%<br><br>"+
-          "<b>Non-Hispanic American Indian Population:</b>  {expression/ameri}<br>"+
-          "<b>Percent Non-Hispanic American Indian:</b>  {expression/ameripct}%<br><br>"+
-          "<b>Non-Hispanic Asian/Pacific Islander Population:</b>  {expression/asian}<br>"+
-          "<b>Percent Non-Hispanic Asian/Pacific Islander:</b>  {expression/asianpct}%<br><br>"+
-          "<b>Other Race:</b>  {expression/other}<br>"+
-          "<b>Percent Other Race:</b>  {expression/otherpct}%<br><br>"+
-          "<b>Non-Hispanic Multiple Races:</b>  {expression/multi}<br>"+
-          "<b>Percent Non-Hispanic Multiple Races:</b>  {expression/multipct}%<br><br>"
+        type: "fields",
+              fieldInfos: [
+                {
+                  fieldName: "TOTALPOP",
+                  label: "Total Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "HISPANIC",
+                  label: "Hispanic",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHWHITE",
+                  label: "Non-Hispanic White",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHBLACK",
+                  label: "Non-Hispanic Black",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHAMERI",
+                  label: "Non-Hispanic American Indian",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHASIANPI",
+                  label: "Non-Hispanic Asian/Pacific Islander",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "OTHERALONE",
+                  label: "Other Race (Includes Hispanic)",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "MULTIALONE",
+                  label: "Multiple Races (Includes Hispanic)",
+                  format: {
+                    digitSeparator: true
+                  }
+                }
+              ]
         },{
           type: "media",
           mediaInfos: [
@@ -907,13 +966,30 @@ require([
       var popuphouse = {
         title: "{NAMELSAD20}",
         content:[{
-          type: "text",
-          text:
-          "<b>Total Housing Units:</b>  {expression/house}<br><br>"+
-          "<b>Occupied:</b>  {expression/occ}<br>"+
-          "<b>Percent Occupied:</b>  {expression/occpct}%<br><br>"+
-          "<b>Vacant:</b>  {expression/vac}<br>"+
-          "<b>Percent Vacant:</b>  {expression/vacpct}%"
+        type: "fields",
+              fieldInfos: [
+                {
+                  fieldName: "HOUSEUNIT",
+                  label: "Housing Units",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "OCCUPIED",
+                  label: "Occupied Units",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "VACANT",
+                  label: "Vacant Units",
+                  format: {
+                    digitSeparator: true
+                  }
+                }
+              ]
         },{
             type: "media",
             mediaInfos: [
@@ -950,29 +1026,86 @@ require([
       var popupgq = {
         title: "{NAMELSAD20}",
         content:[{
-          type: "text",
-          text:
-          "<b>Total Population:</b>  {expression/pop}<br>"+
-          "<b>Group Quarters Population:</b>  {expression/gq}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/gqpct}%<br><br>"+
-          "<b>Instituionalized Population:</b>  {expression/inst}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/instpct}%<br><br>"+
-          "<b>Correctional Facility Population:</b>  {expression/corr}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/corrpct}%<br><br>"+
-          "<b>Juvenile Detention Population:</b>  {expression/juv}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/juvpct}%<br><br>"+
-          "<b>Nursing Home Population:</b>  {expression/nurse}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/nursepct}%<br><br>"+
-          "<b>Other Instituionalized Population:</b>  {expression/oinst}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/oinstpct}%<br><br>"+
-          "<b>Non-Institutionalized Population:</b>  {expression/ninst}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/ninstpct}%<br><br>"+
-          "<b>College Housing Population:</b>  {expression/coll}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/collpct}%<br><br>"+
-          "<b>Military Housing Population:</b>  {expression/mil}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/milpct}%<br><br>"+
-          "<b>Other Non-Institutionalized Population:</b>  {expression/oninst}<br>"+
-          "<b>Percent of Total Population:</b>  {expression/oninstpct}%<br><br>"
+        type: "fields",
+              fieldInfos: [
+                {
+                  fieldName: "TOTALPOP",
+                  label: "Total Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "GQPOP",
+                  label: "Group Quarters Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "INSTITPOP",
+                  label: "Institutionalized Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "CORRPOP",
+                  label: "Correctional Facility Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "JUVPOP",
+                  label: "Juvenile Facility Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NURSINGPOP",
+                  label: "Nursing Home Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "OINSTITPOP",
+                  label: "Other Institutionalized Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NONINSTPOP",
+                  label: "Non-Institutionalized Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "COLLEGEPOP",
+                  label: "College Housin Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "MILITPOP",
+                  label: "Military Housing Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "ONINSTITPO",
+                  label: "Other Non-Institutionalized Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                }
+              ]
       },{
             type: "media",
             mediaInfos: [
