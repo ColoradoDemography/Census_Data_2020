@@ -83,6 +83,24 @@ require([
       }
     };
 
+    const labelClass = {
+      // autocasts as new LabelClass()
+      symbol: {
+        type: "text",  // autocasts as new TextSymbol()
+        color: "black",
+        font: {  // autocast as new Font()
+          family: "Playfair Display",
+          size: 8,
+          weight: "bold"
+        }
+      },
+      labelPlacement: "above-center",
+      labelExpressionInfo: {
+        expression: "$feature.NAME20"
+      },
+      maxScale: 1000000
+    };
+
     var popupage = {
       title: "{DISPNAME}",
       content:[{
@@ -146,13 +164,11 @@ require([
       return u18tot;
     }
 
-
-    //popupage.expressionInfos = arcadeExpressionInfos;
-
     var countyOutline = new FeatureLayer({
       title: "County Outline",
       url: "https://services.arcgis.com/IamIM3RJ5xHykalK/arcgis/rest/services/Census_County_Data_2020/FeatureServer/0",
       popupEnabled: false,
+      labelingInfo: [labelClass],
       renderer: outlinerenderer
     })
     
