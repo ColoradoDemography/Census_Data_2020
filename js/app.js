@@ -1243,6 +1243,13 @@ require([
           tractLayer.popupTemplate = popupgq;
           bgLayer.popupTemplate = popupgq;
           break;
+        case "Change":
+          countyLayer.popupTemplate = popupchange;
+          countyLayer.visible = true;
+          placeLayer.visible = false;
+          tractLayer.visible = false;
+          bgLayer.visible = false;
+          fLayer = countyLayer;
       }
 
       //console.log(statLabel);

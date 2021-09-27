@@ -69,6 +69,8 @@
       housevalue = ['VACANT'];
       gqmenu = ['Group Quarters', 'Institutionalized', 'Correctional Facility', 'Juvenile Facility', 'Nursing Home', 'Other Institutionalized', 'Non-Institutionalized', 'College Housing', 'Military Housing', 'Other Non-Institutionalized'];
       gqvalue = ['GQPOP', 'INSTITPOP', 'CORRPOP', 'JUVPOP', 'NURSINGPOP', 'OINSTITPOP', 'NONINSTPOP', 'COLLEGEPOP', 'MILITPOP', 'ONINSTITPO'];
+      changemenu = ['Population', 'Under 18', '18 and Older', 'Hispanic', 'Non-Hispanic White', 'Non-Hispanic Black', 'Non-Hispanic American Indian', 'Non-Hispanic Asian/Pacific Islander', 'Housing Units', 'Group Quarters Population'];
+      changevalue = ['POP10', 'U1810', 'O1810', 'HISP10', 'NHW10', 'NHB10', 'NHAMER10', 'NHASPI10', 'HU10', 'GQPOP10'];
 
       switch (catselect.value){
         case 'Age':
@@ -93,6 +95,12 @@
           statselect.options.length = 0;
           for (i = 0; i < gqmenu.length; i++) {
             createOption(statselect, gqmenu[i], gqvalue[i]);
+          }
+          break;
+        case 'Change':
+          statselect.options.length = 0;
+          for (i = 0; i < gqmenu.length; i++) {
+            createOption(statselect, changemenu[i], changevalue[i]);
           }
           break;
       }
@@ -128,6 +136,7 @@
             <option value="Race">Race and Ethnicity</option>
             <option value="Housing">Housing</option>
             <option value="GQ">Group Quarters</option>
+            <option value="Change">Change from 2010 (County only)</option>
           </select>
         </div>
         <div class="statDiv" id="statDiv">Stat:
