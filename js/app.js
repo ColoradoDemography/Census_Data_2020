@@ -1186,6 +1186,86 @@ require([
         }]
       };
 
+      var popupchange = {
+        title: "{NAMELSAD20}",
+        content:[{
+        type: "fields",
+              fieldInfos: [
+                {
+                  fieldName: "TOTALPOP",
+                  label: "2020 Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "POP10",
+                  label: "2010 Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "expression/popchange",
+                  label: "Population Change",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "HOUSEUNIT",
+                  label: "2020 Housing Units",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "HU10",
+                  label: "2010 Housing Units",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "expression/huchange",
+                  label: "Housing Unit Change",
+                  format: {
+                    digitSeparator: true
+                  }
+                }
+              ]
+        }],
+
+        expressionInfos: [{
+          name: "popchange",
+          expression: "Round((($feature.TOTALPOP-$feature.POP10)/$feature.POP10)*100,2)"
+        },{
+          name: "huchange",
+          expression: "Round((($feature.HOUSEUNIT-$feature.HU10)/$feature.HU10)*100,2)"
+        },{
+          name: "hispchange",
+          expression: "Round((($feature.HISPANIC-$feature.HISP10)/$feature.HISP10)*100,2)"
+        },{
+          name: "whitechange",
+          expression: "Round((($feature.NHWHITE-$feature.NHW10)/$feature.NHW10)*100,2)"
+        },{
+          name: "amerchange",
+          expression: "Round((($feature.NHAMERI-$feature.NHAMER10)/$feature.NHAMER10)*100,2)"
+        },{
+          name: "asianchange",
+          expression: "Round((($feature.NHASIANPI-$feature.NHASPI10)/$feature.NHASPI10)*100,2)"
+        },{
+          name: "u18change",
+          expression: "Round((($feature.UNDER18-$feature.U1810)/$feature.U1810)*100,2)"
+        },{
+          name: "o18change",
+          expression: "Round((($feature.POP18-$feature.O1810)/$feature.O1810)*100,2)"
+        },{
+          name: "gqchange",
+          expression: "Round((($feature.GQPOP-$feature.GQPOP10)/$feature.GQPOP10)*100,2)"
+        }]
+      };
+
       //console.log(geoLabel);
       switch (geoLabel){
         case "County":
@@ -1324,7 +1404,6 @@ require([
         case "COLLEGEPOP":
         case "MILITPOP":
         case "ONINSTITPO":
-          console.log(statselect.options[statselect.selectedIndex].value);
           countyLayer.renderer = gqrenderer;
           placeLayer.renderer = gqrenderer;
           tractLayer.renderer = gqrenderer;
