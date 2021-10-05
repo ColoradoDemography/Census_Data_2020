@@ -1232,37 +1232,218 @@ require([
                   format: {
                     digitSeparator: true
                   }
+                },
+                {
+                  fieldName: "HISPANIC",
+                  label: "2020 Hispanic",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "HISP10",
+                  label: "2010 Hispanic",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "expression/hispchange",
+                  label: "Hispanic Change",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHWHITE",
+                  label: "2020 Non-Hispanic White",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHW10",
+                  label: "2010 Non-Hispanic White",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "expression/whitechange",
+                  label: "Non-Hispanic White Change",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHBLACK",
+                  label: "2020 Non-Hispanic Black",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHW10",
+                  label: "2010 Non-Hispanic Black",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "expression/blackchange",
+                  label: "Non-Hispanic Black Change",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHAMERI",
+                  label: "2020 Non-Hispanic American Indian",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHW10",
+                  label: "2010 Non-Hispanic American Indian",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "expression/amerchange",
+                  label: "Non-Hispanic American Indian Change",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHASIANPI",
+                  label: "2020 Non-Hispanic Asian/Pacific Islander",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "NHASPI10",
+                  label: "2010 Non-Hispanic Asian/Pacific Islander",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "expression/asianchange",
+                  label: "Non-Hispanic Asian/Pacific Islander Change",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "UNDER18",
+                  label: "2020 Under 18 Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "U1810",
+                  label: "2010 Under 18 Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "expression/u18change",
+                  label: "Under 18 Population Change",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "POP18",
+                  label: "2020 18 and Older Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "O1810",
+                  label: "2010 18 and Older Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "expression/o18change",
+                  label: "18 and Older Population Change",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "GQPOP",
+                  label: "2020 Group Quarters Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "GQPOP10",
+                  label: "2010 Group Quarters Population",
+                  format: {
+                    digitSeparator: true
+                  }
+                },
+                {
+                  fieldName: "expression/gqchange",
+                  label: "Group Quarters Population Change",
+                  format: {
+                    digitSeparator: true
+                  }
                 }
               ]
         }],
 
         expressionInfos: [{
           name: "popchange",
-          expression: "Round((($feature.TOTALPOP-$feature.POP10)/$feature.POP10)*100,2)"
+          title: "Population Change",
+          expression: "Round((($feature.TOTALPOP-$feature.POP10)/$feature.POP10)*100,2) + '%'"
         },{
           name: "huchange",
-          expression: "Round((($feature.HOUSEUNIT-$feature.HU10)/$feature.HU10)*100,2)"
+          title: "Housing Unit Change",
+          expression: "Round((($feature.HOUSEUNIT-$feature.HU10)/$feature.HU10)*100,2) + '%'"
         },{
           name: "hispchange",
-          expression: "Round((($feature.HISPANIC-$feature.HISP10)/$feature.HISP10)*100,2)"
+          title: "Hispanic Change",
+          expression: "Round((($feature.HISPANIC-$feature.HISP10)/$feature.HISP10)*100,2) + '%'"
         },{
           name: "whitechange",
-          expression: "Round((($feature.NHWHITE-$feature.NHW10)/$feature.NHW10)*100,2)"
+          title: "Non-Hispanic White Change",
+          expression: "Round((($feature.NHWHITE-$feature.NHW10)/$feature.NHW10)*100,2) + '%'"
+        },{
+          name: "blackchange",
+          title: "Non-Hispanic Black Change",
+          expression: "Round((($feature.NHBLACK-$feature.NHB10)/$feature.NHB10)*100,2) + '%'"
         },{
           name: "amerchange",
-          expression: "Round((($feature.NHAMERI-$feature.NHAMER10)/$feature.NHAMER10)*100,2)"
+          title: "Non-Hispanic American Indian Change",
+          expression: "Round((($feature.NHAMERI-$feature.NHAMER10)/$feature.NHAMER10)*100,2) + '%'"
         },{
           name: "asianchange",
-          expression: "Round((($feature.NHASIANPI-$feature.NHASPI10)/$feature.NHASPI10)*100,2)"
+          title: "Non-Hispanic Asian/Pacific Islander Change",
+          expression: "Round((($feature.NHASIANPI-$feature.NHASPI10)/$feature.NHASPI10)*100,2) + '%'"
         },{
           name: "u18change",
-          expression: "Round((($feature.UNDER18-$feature.U1810)/$feature.U1810)*100,2)"
+          title: "Under 18 Change",
+          expression: "Round((($feature.UNDER18-$feature.U1810)/$feature.U1810)*100,2) + '%'"
         },{
           name: "o18change",
-          expression: "Round((($feature.POP18-$feature.O1810)/$feature.O1810)*100,2)"
+          title: "18 and Older Change",
+          expression: "Round((($feature.POP18-$feature.O1810)/$feature.O1810)*100,2) + '%'"
         },{
           name: "gqchange",
-          expression: "Round((($feature.GQPOP-$feature.GQPOP10)/$feature.GQPOP10)*100,2)"
+          title: "Group Quarters Population Change",
+          expression: "Round((($feature.GQPOP-$feature.GQPOP10)/$feature.GQPOP10)*100,2) + '%'"
         }]
       };
 
