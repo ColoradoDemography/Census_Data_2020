@@ -835,6 +835,114 @@ require([
         },
         label: "> 5%"
       });
+      
+      //Population Change renderer
+      var popchangerenderer = new ClassBreaksRenderer({
+        type: "class-breaks",
+        valueExpression: "(($feature.TOTALPOP - $feature.POP10)/$feature.POP10)*100",
+        legendOptions: {
+          title: "Percent Population Change"
+        }
+      });
+      popchangerenderer.addClassBreakInfo({
+        minValue: -100,
+        maxValue: -10,
+        symbol: {
+          type: "simple-fill",  
+          color: "#2c7bb6"
+        },
+        label: "< 10% Loss"
+      });
+      popchangerenderer.addClassBreakInfo({
+        minValue: -10,
+        maxValue: 0,
+        symbol: {
+          type: "simple-fill",  
+          color: "#abd9e9"
+        },
+        label: "0% to 10% Loss"
+      });    
+      popchangerenderer.addClassBreakInfo({
+        minValue: 0,
+        maxValue: 10,
+        symbol: {
+          type: "simple-fill",  
+          color: "#ffffbf"
+        },
+        label: "0% to 10% Gain"
+      });  
+      popchangerenderer.addClassBreakInfo({
+        minValue: 10,
+        maxValue: 20,
+        symbol: {
+          type: "simple-fill",  
+          color: "#fdae61"
+        },
+        label: "10% to 20% Gain"
+      });
+      popchangerenderer.addClassBreakInfo({
+        minValue: 20,
+        maxValue: 100,
+        symbol: {
+          type: "simple-fill",  
+          color: "#d7191c"
+        },
+        label: "> 20% Gain"
+      }); 
+
+      //Population Change renderer
+      var u18changerenderer = new ClassBreaksRenderer({
+        type: "class-breaks",
+        valueExpression: "(($feature.UNDER18 - $feature.U1810)/$feature.U1810)*100",
+        legendOptions: {
+          title: "Percent Population Change"
+        }
+      });
+      u18changerenderer.addClassBreakInfo({
+        minValue: -100,
+        maxValue: -10,
+        symbol: {
+          type: "simple-fill",  
+          color: "#4575b4"
+        },
+        label: "< 10% Loss"
+      });
+      u18changerenderer.addClassBreakInfo({
+        minValue: -10,
+        maxValue: -5,
+        symbol: {
+          type: "simple-fill",  
+          color: "#91bfdb"
+        },
+        label: "5% to 10% Loss"
+      });    
+      u18changerenderer.addClassBreakInfo({
+        minValue: -5,
+        maxValue: 0,
+        symbol: {
+          type: "simple-fill",  
+          color: "#e0f3f8"
+        },
+        label: "0% to 5% Loss"
+      });  
+      u18changerenderer.addClassBreakInfo({
+        minValue: 0,
+        maxValue: 10,
+        symbol: {
+          type: "simple-fill",  
+          color: "#fc8d59"
+        },
+        label: "0% to 10% Gain"
+      });
+      u18changerenderer.addClassBreakInfo({
+        minValue: 10,
+        maxValue: 100,
+        symbol: {
+          type: "simple-fill",  
+          color: "#d7191c"
+        },
+        label: "> 10% Gain"
+      });
       // Popups  
       var popuprace = {
         title: "{NAMELSAD20}",
@@ -1590,6 +1698,26 @@ require([
           tractLayer.renderer = gqrenderer;
           bgLayer.renderer = gqrenderer;
           break;
+        case "POP10":
+          countyLayer.renderer = popchangerenderer;
+        case "U1810":
+          countyLayer.renderer = u18changerenderer;
+        case "O1810":
+          countyLayer.renderer = o18changerenderer;
+        case "U1810":
+          countyLayer.renderer = u18changerenderer;
+        case "U1810":
+          countyLayer.renderer = u18changerenderer;
+        case "U1810":
+          countyLayer.renderer = u18changerenderer;
+        case "U1810":
+          countyLayer.renderer = u18changerenderer;
+        case "U1810":
+          countyLayer.renderer = u18changerenderer;
+        case "U1810":
+          countyLayer.renderer = u18changerenderer;
+        case "U1810":
+          countyLayer.renderer = u18changerenderer;
       }
     }
 
