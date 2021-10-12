@@ -226,9 +226,9 @@ require([
 
     var fLayer = countyLayer;
 
-    let grayBasemap = Basemap.fromId("gray-vector");
+    let topoBasemap = Basemap.fromId("topo-vector");
     const map = new WebMap({
-      basemap: grayBasemap,
+      basemap: topoBasemap,
       layers: [countyLayer, placeLayer, tractLayer, bgLayer, countyOutline]
     });
 
@@ -236,7 +236,7 @@ require([
       container: "viewDiv",
       map: map,
       center: [-105.397803, 39.168709], // longitude, latitude
-      zoom: 6,
+      zoom: 7,
       popup: {
         autoOpenEnabled: false
       }
