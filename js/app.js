@@ -851,7 +851,7 @@ require([
           type: "simple-fill",  
           color: "#2c7bb6"
         },
-        label: "< 10% Loss"
+        label: "> 10% Loss"
       });
       popchangerenderer.addClassBreakInfo({
         minValue: -10,
@@ -890,12 +890,12 @@ require([
         label: "> 20% Gain"
       }); 
 
-      //Population Change renderer
+      //Under 18 Population Change renderer
       var u18changerenderer = new ClassBreaksRenderer({
         type: "class-breaks",
         valueExpression: "(($feature.UNDER18 - $feature.U1810)/$feature.U1810)*100",
         legendOptions: {
-          title: "Percent Population Change"
+          title: "Percent Under 18 Population Change"
         }
       });
       u18changerenderer.addClassBreakInfo({
@@ -905,7 +905,7 @@ require([
           type: "simple-fill",  
           color: "#4575b4"
         },
-        label: "< 10% Loss"
+        label: "> 10% Loss"
       });
       u18changerenderer.addClassBreakInfo({
         minValue: -10,
@@ -943,6 +943,439 @@ require([
         },
         label: "> 10% Gain"
       });
+
+      //Over 18 Population Change renderer
+      var o18changerenderer = new ClassBreaksRenderer({
+        type: "class-breaks",
+        valueExpression: "(($feature.POP18 - $feature.O1810)/$feature.O1810)*100",
+        legendOptions: {
+          title: "Percent Under 18 Population Change"
+        }
+      });
+      o18changerenderer.addClassBreakInfo({
+        minValue: -100,
+        maxValue: 0,
+        symbol: {
+          type: "simple-fill",  
+          color: "#e0f3f8"
+        },
+        label: "> 0% Loss"
+      });
+      o18changerenderer.addClassBreakInfo({
+        minValue: 0,
+        maxValue: 5,
+        symbol: {
+          type: "simple-fill",  
+          color: "#fee090"
+        },
+        label: "0% to 5% Gain"
+      });    
+      o18changerenderer.addClassBreakInfo({
+        minValue: 5,
+        maxValue: 10,
+        symbol: {
+          type: "simple-fill",  
+          color: "#fdae61"
+        },
+        label: "5% to 10% Gain"
+      });  
+      o18changerenderer.addClassBreakInfo({
+        minValue: 10,
+        maxValue: 20,
+        symbol: {
+          type: "simple-fill",  
+          color: "#f46d43"
+        },
+        label: "10% to 20% Gain"
+      });
+      o18changerenderer.addClassBreakInfo({
+        minValue: 20,
+        maxValue: 100,
+        symbol: {
+          type: "simple-fill",  
+          color: "#d73027"
+        },
+        label: "> 20% Gain"
+      });
+
+      //Hispanic Population Change renderer
+      var hispchangerenderer = new ClassBreaksRenderer({
+        type: "class-breaks",
+        valueExpression: "(($feature.HISPANIC - $feature.HISP10)/$feature.HISP10)*100",
+        legendOptions: {
+          title: "Percent Hispanic Population Change"
+        }
+      });
+      hispchangerenderer.addClassBreakInfo({
+        minValue: -100,
+        maxValue: 0,
+        symbol: {
+          type: "simple-fill",  
+          color: "#e0f3f8"
+        },
+        label: "> 0% Loss"
+      });
+      hispchangerenderer.addClassBreakInfo({
+        minValue: 0,
+        maxValue: 10,
+        symbol: {
+          type: "simple-fill",  
+          color: "#fee090"
+        },
+        label: "0% to 10% Gain"
+      });    
+      hispchangerenderer.addClassBreakInfo({
+        minValue: 10,
+        maxValue: 20,
+        symbol: {
+          type: "simple-fill",  
+          color: "#fdae61"
+        },
+        label: "10% to 20% Gain"
+      });  
+      hispchangerenderer.addClassBreakInfo({
+        minValue: 20,
+        maxValue: 40,
+        symbol: {
+          type: "simple-fill",  
+          color: "#f46d43"
+        },
+        label: "20% to 40% Gain"
+      });
+      hispchangerenderer.addClassBreakInfo({
+        minValue: 40,
+        maxValue: 200,
+        symbol: {
+          type: "simple-fill",  
+          color: "#d73027"
+        },
+        label: "> 40% Gain"
+      });
+
+      //White Population Change renderer
+      var whitechangerenderer = new ClassBreaksRenderer({
+        type: "class-breaks",
+        valueExpression: "(($feature.NHWHITE - $feature.NHW10)/$feature.NHW10)*100",
+        legendOptions: {
+          title: "Percent Non-Hispanic White Population Change"
+        }
+      });
+      whitechangerenderer.addClassBreakInfo({
+        minValue: -100,
+        maxValue: -5,
+        symbol: {
+          type: "simple-fill",  
+          color: "#2c7bb6"
+        },
+        label: "> 5% Loss"
+      });
+      whitechangerenderer.addClassBreakInfo({
+        minValue: -5,
+        maxValue: 0,
+        symbol: {
+          type: "simple-fill",  
+          color: "#abd9e9"
+        },
+        label: "0% to 5% Loss"
+      });    
+      whitechangerenderer.addClassBreakInfo({
+        minValue: 0,
+        maxValue: 5,
+        symbol: {
+          type: "simple-fill",  
+          color: "#ffffbf"
+        },
+        label: "0% to 5% Gain"
+      });  
+      whitechangerenderer.addClassBreakInfo({
+        minValue: 5,
+        maxValue: 10,
+        symbol: {
+          type: "simple-fill",  
+          color: "#fdae61"
+        },
+        label: "5% to 10% Gain"
+      });
+      whitechangerenderer.addClassBreakInfo({
+        minValue: 10,
+        maxValue: 100,
+        symbol: {
+          type: "simple-fill",  
+          color: "#d7191c"
+        },
+        label: "> 10% Gain"
+      });
+
+            //Black Population Change renderer
+            var blackchangerenderer = new ClassBreaksRenderer({
+              type: "class-breaks",
+              valueExpression: "(($feature.NHBLACK - $feature.NHB10)/$feature.NHB10)*100",
+              legendOptions: {
+                title: "Percent Non-Hispanic Black Population Change"
+              }
+            });
+            blackchangerenderer.addClassBreakInfo({
+              minValue: -1000,
+              maxValue: -10,
+              symbol: {
+                type: "simple-fill",  
+                color: "#2c7bb6"
+              },
+              label: "> 10% Loss"
+            });
+            blackchangerenderer.addClassBreakInfo({
+              minValue: -10,
+              maxValue: 0,
+              symbol: {
+                type: "simple-fill",  
+                color: "#abd9e9"
+              },
+              label: "0% to 10% Loss"
+            });    
+            blackchangerenderer.addClassBreakInfo({
+              minValue: 0,
+              maxValue: 20,
+              symbol: {
+                type: "simple-fill",  
+                color: "#ffffbf"
+              },
+              label: "0% to 20% Gain"
+            });  
+            blackchangerenderer.addClassBreakInfo({
+              minValue: 20,
+              maxValue: 40,
+              symbol: {
+                type: "simple-fill",  
+                color: "#fdae61"
+              },
+              label: "20% to 40% Gain"
+            });
+            blackchangerenderer.addClassBreakInfo({
+              minValue: 40,
+              maxValue: 1000,
+              symbol: {
+                type: "simple-fill",  
+                color: "#d7191c"
+              },
+              label: "> 40% Gain"
+            });
+
+            //American Indian Population Change renderer
+            var amerchangerenderer = new ClassBreaksRenderer({
+              type: "class-breaks",
+              valueExpression: "(($feature.NHAMERI - $feature.NHAMER10)/$feature.NHAMER10)*100",
+              legendOptions: {
+                title: "Percent Non-Hispanic American Indian Population Change"
+              }
+            });
+            amerchangerenderer.addClassBreakInfo({
+              minValue: -1000,
+              maxValue: -10,
+              symbol: {
+                type: "simple-fill",  
+                color: "#2c7bb6"
+              },
+              label: "> 10% Loss"
+            });
+            amerchangerenderer.addClassBreakInfo({
+              minValue: -10,
+              maxValue: 0,
+              symbol: {
+                type: "simple-fill",  
+                color: "#abd9e9"
+              },
+              label: "0% to 10% Loss"
+            });    
+            amerchangerenderer.addClassBreakInfo({
+              minValue: 0,
+              maxValue: 20,
+              symbol: {
+                type: "simple-fill",  
+                color: "#ffffbf"
+              },
+              label: "0% to 20% Gain"
+            });  
+            amerchangerenderer.addClassBreakInfo({
+              minValue: 20,
+              maxValue: 40,
+              symbol: {
+                type: "simple-fill",  
+                color: "#fdae61"
+              },
+              label: "20% to 40% Gain"
+            });
+            amerchangerenderer.addClassBreakInfo({
+              minValue: 40,
+              maxValue: 1000,
+              symbol: {
+                type: "simple-fill",  
+                color: "#d7191c"
+              },
+              label: "> 40% Gain"
+            });
+
+            //Asian Population Change renderer
+            var asianchangerenderer = new ClassBreaksRenderer({
+              type: "class-breaks",
+              valueExpression: "(($feature.NHASIANPI - $feature.NHASPI10)/$feature.NHASPI10)*100",
+              legendOptions: {
+                title: "Percent Non-Hispanic Asian/Pacific Islander Population Change"
+              }
+            });
+            asianchangerenderer.addClassBreakInfo({
+              minValue: -1000,
+              maxValue: -10,
+              symbol: {
+                type: "simple-fill",  
+                color: "#2c7bb6"
+              },
+              label: "> 10% Loss"
+            });
+            asianchangerenderer.addClassBreakInfo({
+              minValue: -10,
+              maxValue: 0,
+              symbol: {
+                type: "simple-fill",  
+                color: "#abd9e9"
+              },
+              label: "0% to 10% Loss"
+            });    
+            asianchangerenderer.addClassBreakInfo({
+              minValue: 0,
+              maxValue: 20,
+              symbol: {
+                type: "simple-fill",  
+                color: "#ffffbf"
+              },
+              label: "0% to 20% Gain"
+            });  
+            asianchangerenderer.addClassBreakInfo({
+              minValue: 20,
+              maxValue: 40,
+              symbol: {
+                type: "simple-fill",  
+                color: "#fdae61"
+              },
+              label: "20% to 40% Gain"
+            });
+            asianchangerenderer.addClassBreakInfo({
+              minValue: 40,
+              maxValue: 1000,
+              symbol: {
+                type: "simple-fill",  
+                color: "#d7191c"
+              },
+              label: "> 40% Gain"
+            });
+
+            //Housing Unit Change renderer
+            var huchangerenderer = new ClassBreaksRenderer({
+              type: "class-breaks",
+              valueExpression: "(($feature.HOUSEUNIT - $feature.HU10)/$feature.HU10)*100",
+              legendOptions: {
+                title: "Percent Housing Unit Change"
+              }
+            });
+            huchangerenderer.addClassBreakInfo({
+              minValue: -1000,
+              maxValue: -5,
+              symbol: {
+                type: "simple-fill",  
+                color: "#2c7bb6"
+              },
+              label: "> 5% Loss"
+            });
+            huchangerenderer.addClassBreakInfo({
+              minValue: -5,
+              maxValue: 0,
+              symbol: {
+                type: "simple-fill",  
+                color: "#abd9e9"
+              },
+              label: "0% to 5% Loss"
+            });    
+            huchangerenderer.addClassBreakInfo({
+              minValue: 0,
+              maxValue: 10,
+              symbol: {
+                type: "simple-fill",  
+                color: "#ffffbf"
+              },
+              label: "0% to 10% Gain"
+            });  
+            huchangerenderer.addClassBreakInfo({
+              minValue: 10,
+              maxValue: 20,
+              symbol: {
+                type: "simple-fill",  
+                color: "#fdae61"
+              },
+              label: "10% to 20% Gain"
+            });
+            huchangerenderer.addClassBreakInfo({
+              minValue: 20,
+              maxValue: 1000,
+              symbol: {
+                type: "simple-fill",  
+                color: "#d7191c"
+              },
+              label: "> 20% Gain"
+            });
+
+            //Group Quarters Change renderer
+            var gqchangerenderer = new ClassBreaksRenderer({
+              type: "class-breaks",
+              valueExpression: "(($feature.GQPOP - $feature.GQPOP10)/$feature.GQPOP10)*100",
+              legendOptions: {
+                title: "Percent Group Quarters Population Change"
+              }
+            });
+            gqchangerenderer.addClassBreakInfo({
+              minValue: -1000,
+              maxValue: -10,
+              symbol: {
+                type: "simple-fill",  
+                color: "#2c7bb6"
+              },
+              label: "> 10% Loss"
+            });
+            gqchangerenderer.addClassBreakInfo({
+              minValue: -10,
+              maxValue: 0,
+              symbol: {
+                type: "simple-fill",  
+                color: "#abd9e9"
+              },
+              label: "0% to 10% Loss"
+            });    
+            gqchangerenderer.addClassBreakInfo({
+              minValue: 0,
+              maxValue: 10,
+              symbol: {
+                type: "simple-fill",  
+                color: "#ffffbf"
+              },
+              label: "0% to 10% Gain"
+            });  
+            gqchangerenderer.addClassBreakInfo({
+              minValue: 10,
+              maxValue: 25,
+              symbol: {
+                type: "simple-fill",  
+                color: "#fdae61"
+              },
+              label: "10% to 25% Gain"
+            });
+            gqchangerenderer.addClassBreakInfo({
+              minValue: 25,
+              maxValue: 1000,
+              symbol: {
+                type: "simple-fill",  
+                color: "#d7191c"
+              },
+              label: "> 25% Gain"
+            });
+
       // Popups  
       var popuprace = {
         title: "{NAMELSAD20}",
@@ -1391,7 +1824,7 @@ require([
                   }
                 },
                 {
-                  fieldName: "NHW10",
+                  fieldName: "NHB10",
                   label: "2010 Non-Hispanic Black",
                   format: {
                     digitSeparator: true
@@ -1412,7 +1845,7 @@ require([
                   }
                 },
                 {
-                  fieldName: "NHW10",
+                  fieldName: "NHAMER10",
                   label: "2010 Non-Hispanic American Indian",
                   format: {
                     digitSeparator: true
@@ -1700,24 +2133,34 @@ require([
           break;
         case "POP10":
           countyLayer.renderer = popchangerenderer;
+          break;
         case "U1810":
           countyLayer.renderer = u18changerenderer;
+          break;
         case "O1810":
           countyLayer.renderer = o18changerenderer;
-        case "U1810":
-          countyLayer.renderer = u18changerenderer;
-        case "U1810":
-          countyLayer.renderer = u18changerenderer;
-        case "U1810":
-          countyLayer.renderer = u18changerenderer;
-        case "U1810":
-          countyLayer.renderer = u18changerenderer;
-        case "U1810":
-          countyLayer.renderer = u18changerenderer;
-        case "U1810":
-          countyLayer.renderer = u18changerenderer;
-        case "U1810":
-          countyLayer.renderer = u18changerenderer;
+          break;
+        case "HISP10":
+          countyLayer.renderer = hispchangerenderer;
+          break;
+        case "NHW10":
+          countyLayer.renderer = whitechangerenderer;
+          break;
+        case "NHB10":
+          countyLayer.renderer = blackchangerenderer;
+          break;
+        case "NHAMER10":
+          countyLayer.renderer = amerchangerenderer;
+          break;
+        case "NHASPI10":
+          countyLayer.renderer = asianchangerenderer;
+          break;
+        case "HU10":
+          countyLayer.renderer = huchangerenderer;
+          break;
+        case "GQPOP10":
+          countyLayer.renderer = gqchangerenderer;
+          break;
       }
     }
 
