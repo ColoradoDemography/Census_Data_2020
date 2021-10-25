@@ -4,6 +4,7 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <title>2020 Census Data</title>
     <link rel="stylesheet" href="https://js.arcgis.com/4.20/esri/themes/light/main.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
     <script src="https://js.arcgis.com/4.20/"></script>
     <script src="js/app.js"></script>
@@ -122,7 +123,7 @@
       <div id="menus">
         <div id="geoDiv" class="esri-widget">
           Geography:
-          <select id="geoselect" class="esri-widget">
+          <select id="geoselect" class="form-control">
             <option value="County" selected>County</option>
             <option value="Place">Place</option>
             <option value="Tract">Tract</option>
@@ -131,7 +132,7 @@
         </div>
         <div id="catDiv" class="esri-widget">
           Data Category:
-          <select id="catselect" class="esri-widget" onchange="configureDropDownLists(this,document.getElementById('statselect'))">
+          <select id="catselect" class="form-control" onchange="configureDropDownLists(this,document.getElementById('statselect'))">
             <option value="Age" selected>Age</option>
             <option value="Race">Race and Ethnicity</option>
             <option value="Housing">Housing</option>
@@ -140,11 +141,8 @@
           </select>
         </div>
         <div class="statDiv" id="statDiv">Stat:
-<!--           <script type="text/javascript" language="JavaScript">
-          document.write('<select id="statselect" class="esri-widget"><option value="U18" selected>Under 18</option><option value="O18">18 and Older</option></select>')
-          </script> -->
 
-           <select id="statselect" class="esri-widget">
+           <select id="statselect" class="form-control">
               <option value="U18" selected>Under 18</option>
               <option value="O18">18 and Older</option>
           </select>

@@ -11,8 +11,9 @@ require([
     "esri/popup/content/ColumnChartMediaInfo",
     "esri/popup/content/PieChartMediaInfo",
     "esri/popup/content/support/ChartMediaInfoValue",
-    "esri/popup/content/FieldsContent"
-  ], function (WebMap, Basemap, FeatureLayer, MapView, Feature, ClassBreakInfo, ClassBreaksRenderer, Legend, Expand, ColumnChartMediaInfo, PieChartMediaInfo, ChartMediaInfoValue, FieldsContent) {
+    "esri/popup/content/FieldsContent",
+    "esri/widgets/Print"
+  ], function (WebMap, Basemap, FeatureLayer, MapView, Feature, ClassBreakInfo, ClassBreaksRenderer, Legend, Expand, ColumnChartMediaInfo, PieChartMediaInfo, ChartMediaInfoValue, FieldsContent, Print) {
   
     //Access infodiv for popups
     var popdiv = document.getElementById("infodiv");
@@ -253,7 +254,22 @@ require([
       expandTooltip: "Legend"
     });
 
+    var print = new Print({
+      view: view,
+      // specify your own print service
+      printServiceUrl:
+        "https://dola-online.maps.arcgis.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
+    });
+
+    var expand2 = new Expand({
+      view: view,
+      content: print,
+      expandIconClass: "esri-icon-printer",
+      expandTooltip: "Print"
+    });
+
     view.ui.add([expand1], "top-right");
+    //view.ui.add([expand2], "bottom-right");
 
     view.when().then(function () {
       //Update the geography shown
