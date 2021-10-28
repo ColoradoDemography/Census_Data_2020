@@ -62,13 +62,13 @@
     } */
 
     function configureDropDownLists(catselect,statselect) {
-      racemenu = ['Hispanic', 'Non-Hispanic White', 'Non-Hispanic Black', 'Non-Hispanic Native American', 'Non-Hispanic Asian/Pacific Islander', 'Other Race', 'Multiple Races'];
-      racevalue = ['HISP', 'WHITE', 'BLACK', 'NANH', 'APNH', 'OTHER', 'MULTI'];
+      racemenu = ['Hispanic', 'Non-Hispanic White', 'Non-Hispanic Black', 'Non-Hispanic Native American', 'Non-Hispanic Asian/Pacific Islander', 'Other Race', 'Multiple Races', 'Prevalent Race or Ethnicity', '2nd Most Prevalent'];
+      racevalue = ['HISP', 'WHITE', 'BLACK', 'NANH', 'APNH', 'OTHER', 'MULTI', 'PREV', '2ND'];
       agemenu = ['Under 18', '18 and Older'];
       agevalue = ['U18', 'O18'];
       housemenu = ['Vacant Housing Units'];
       housevalue = ['VACANT'];
-      gqmenu = ['Group Quarters', 'Institutionalized', 'Correctional Facility', 'Juvenile Facility', 'Nursing Home', 'Other Institutionalized', 'Non-Institutionalized', 'College Housing', 'Military Housing', 'Other Non-Institutionalized'];
+      gqmenu = ['All Group Quarters', 'Institutionalized', 'Correctional Facility', 'Juvenile Facility', 'Nursing Home', 'Other Institutionalized', 'Non-Institutionalized', 'College Housing', 'Military Housing', 'Other Non-Institutionalized'];
       gqvalue = ['GQPOP', 'INSTITPOP', 'CORRPOP', 'JUVPOP', 'NURSINGPOP', 'OINSTITPOP', 'NONINSTPOP', 'COLLEGEPOP', 'MILITPOP', 'ONINSTITPO'];
       changemenu = ['Population', 'Under 18', '18 and Older', 'Hispanic', 'Non-Hispanic White', 'Non-Hispanic Black', 'Non-Hispanic American Indian', 'Non-Hispanic Asian/Pacific Islander', 'Housing Units', 'Group Quarters Population'];
       changevalue = ['POP10', 'U1810', 'O1810', 'HISP10', 'NHW10', 'NHB10', 'NHAMER10', 'NHASPI10', 'HU10', 'GQPOP10'];
@@ -136,7 +136,7 @@
             <option value="Age" selected>Age</option>
             <option value="Race">Race and Ethnicity</option>
             <option value="Housing">Housing</option>
-            <option value="GQ">Group Quarters</option>
+            <option value="GQ">Group Quarters Population</option>
             <option value="Change">Change from 2010 (County only)</option>
           </select>
         </div>

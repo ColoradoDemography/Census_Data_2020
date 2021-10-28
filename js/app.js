@@ -6,6 +6,7 @@ require([
     "esri/widgets/Feature",
     "esri/renderers/support/ClassBreakInfo",
     "esri/renderers/ClassBreaksRenderer",
+    "esri/smartMapping/renderers/predominance",
     "esri/widgets/Legend",
     "esri/widgets/Expand",
     "esri/popup/content/ColumnChartMediaInfo",
@@ -13,7 +14,7 @@ require([
     "esri/popup/content/support/ChartMediaInfoValue",
     "esri/popup/content/FieldsContent",
     "esri/widgets/Print"
-  ], function (WebMap, Basemap, FeatureLayer, MapView, Feature, ClassBreakInfo, ClassBreaksRenderer, Legend, Expand, ColumnChartMediaInfo, PieChartMediaInfo, ChartMediaInfoValue, FieldsContent, Print) {
+  ], function (WebMap, Basemap, FeatureLayer, MapView, Feature, ClassBreakInfo, ClassBreaksRenderer, predominanceRendererCreator, Legend, Expand, ColumnChartMediaInfo, PieChartMediaInfo, ChartMediaInfoValue, FieldsContent, Print) {
   
     //Access infodiv for popups
     var popdiv = document.getElementById("infodiv");
@@ -328,6 +329,7 @@ require([
         });
       });
     });
+
 
     //Create others depending on selected stat
     function generateRenderer() {
@@ -851,7 +853,111 @@ require([
         },
         label: "> 5%"
       });
-      
+
+  // Prevalence
+    var prevrenderer = {
+        type: "unique-value",
+        field: "PREV",
+        legendOptions: {
+          title: "Most Prevalent Race or Ethnicity"
+        },
+      uniqueValueInfos:[
+        {
+          value: "Hispanic",
+          symbol: {
+            type: "simple-fill",  
+            color: "red"
+          },
+          label: "Hispanic"
+        },
+        {
+          value: "White",
+          symbol: {
+            type: "simple-fill",  
+            color: "yellow"
+          },
+          label: "White"
+        },
+        {
+          value: "Black",
+          symbol: {
+            type: "simple-fill",  
+            color: "blue"
+          },
+          label: "White"
+        },
+        {
+          value: "Native American",
+          symbol: {
+            type: "simple-fill",  
+            color: "purple"
+          },
+          label: "Native American"
+        },
+        {
+          value: "Asian/Pacific Islander",
+          symbol: {
+            type: "simple-fill",  
+            color: "green"
+          },
+          label: "Asian/Pacific Islander"
+        }
+      ]
+    };
+
+    // 2nd Prevalence
+    var secondrenderer = {
+      type: "unique-value",
+      field: "PREV2",
+      legendOptions: {
+        title: "Most Prevalent Race or Ethnicity"
+      },
+    uniqueValueInfos:[
+      {
+        value: "Hispanic",
+        symbol: {
+          type: "simple-fill",  
+          color: "red"
+        },
+        label: "Hispanic"
+      },
+      {
+        value: "White",
+        symbol: {
+          type: "simple-fill",  
+          color: "yellow"
+        },
+        label: "White"
+      },
+      {
+        value: "Black",
+        symbol: {
+          type: "simple-fill",  
+          color: "blue"
+        },
+        label: "White"
+      },
+      {
+        value: "Native American",
+        symbol: {
+          type: "simple-fill",  
+          color: "purple"
+        },
+        label: "Native American"
+      },
+      {
+        value: "Asian/Pacific Islander",
+        symbol: {
+          type: "simple-fill",  
+          color: "green"
+        },
+        label: "Asian/Pacific Islander"
+      }
+    ]
+  };                        
+
+  
+        
       //Population Change renderer
       var popchangerenderer = new ClassBreaksRenderer({
         type: "class-breaks",
@@ -2125,6 +2231,18 @@ require([
           placeLayer.renderer = multirenderer;
           tractLayer.renderer = multirenderer;
           bgLayer.renderer = multirenderer;
+          break;
+        case "PREV":
+          countyLayer.renderer = prevrenderer;
+          placeLayer.renderer = prevrenderer;
+          tractLayer.renderer = prevrenderer;
+          bgLayer.renderer = prevrenderer;
+          break;
+        case "2ND":
+          countyLayer.renderer = secondrenderer;
+          placeLayer.renderer = secondrenderer;
+          tractLayer.renderer = secondrenderer;
+          bgLayer.renderer = secondrenderer;
           break;
         case "VACANT":
           countyLayer.renderer = vacrenderer;
