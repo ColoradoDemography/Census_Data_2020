@@ -910,7 +910,7 @@ require([
       type: "unique-value",
       field: "PREV2",
       legendOptions: {
-        title: "Most Prevalent Race or Ethnicity"
+        title: "2nd Most Prevalent Race or Ethnicity"
       },
     uniqueValueInfos:[
       {
