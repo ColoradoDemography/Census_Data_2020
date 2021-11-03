@@ -935,7 +935,7 @@ require([
           type: "simple-fill",  
           color: "blue"
         },
-        label: "White"
+        label: "Black"
       },
       {
         value: "Native American",
