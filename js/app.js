@@ -85,6 +85,32 @@ require([
         }
       }
     };
+    
+    
+    let placeoutlinerenderer = {
+      type: "simple",  // autocasts as new SimpleRenderer()
+      symbol: {
+        type: "simple-fill",
+        style: "none",
+        color: "black",
+        outline: {  // autocasts as new SimpleLineSymbol()
+          width: 2,
+          color: "red"
+        }
+      }
+    };
+
+    placeoutlinerenderer.visualVariables = [ {
+      type: "size",
+      valueExpression: "$view.scale",
+      target: "outline",
+      stops: [
+        { size: 4, value: 56187 },
+        { size: 2, value: 175583 },
+        { size: 1, value: 702332 },
+        { size: 0, value: 1404664 }
+      ],
+    }];
 
     const labelClass = {
       // autocasts as new LabelClass()
@@ -102,6 +128,25 @@ require([
         expression: "$feature.NAME20"
       },
       maxScale: 1000000
+    };
+    
+    const placelabelClass = {
+      // autocasts as new LabelClass()
+      symbol: {
+        type: "text",  // autocasts as new TextSymbol()
+        color: "#850c10",
+        font: {  // autocast as new Font()
+          family: "Playfair Display",
+          size: 8,
+          weight: "bold"
+        }
+      },
+      labelPlacement: "above-center",
+      labelExpressionInfo: {
+        expression: "$feature.NAME20"
+      },
+      maxScale: 10000,
+      minScale: 1000000,
     };
 
     var popupage = {
@@ -189,7 +234,16 @@ require([
       popupEnabled: false,
       labelingInfo: [labelClass],
       renderer: outlinerenderer
-    })
+    });
+    
+    var placeOutline = new FeatureLayer({
+      title: "Place Outline",
+      url: "https://services.arcgis.com/IamIM3RJ5xHykalK/arcgis/rest/services/Census_Place_Data_2020/FeatureServer/0",
+      popupEnabled: false,
+      labelingInfo: [placelabelClass],
+      definitionExpression: "CLASSFP20 = 'C1'",
+      renderer: placeoutlinerenderer
+    });
     
     var countyLayer = new FeatureLayer({
       title: "Counties",
