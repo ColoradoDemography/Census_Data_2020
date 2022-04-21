@@ -284,8 +284,8 @@ require([
 
     let topoBasemap = Basemap.fromId("topo-vector");
     const map = new WebMap({
-      basemap: topoBasemap,
-      layers: [countyLayer, placeLayer, tractLayer, bgLayer, countyOutline]
+      basemap: 'topo-vector',
+      layers: [countyLayer, placeLayer, tractLayer, bgLayer, countyOutline, placeOutline]
     });
 
     const view = new MapView({
