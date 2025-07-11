@@ -282,9 +282,9 @@ require([
 
     var fLayer = countyLayer;
 
-    let topoBasemap = Basemap.fromId("topo-vector");
+    let topoBasemap = Basemap.fromId("gray-vector");
     const map = new WebMap({
-      basemap: 'topo-vector',
+      basemap: topoBasemap,
       layers: [countyLayer, placeLayer, tractLayer, bgLayer, countyOutline, placeOutline]
     });
 
