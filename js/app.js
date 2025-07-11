@@ -292,7 +292,7 @@ require([
       container: "viewDiv",
       map: map,
       center: [-105.397803, 39.168709], // longitude, latitude
-      zoom: 7,
+      zoom: 6,
       popup: {
         autoOpenEnabled: false
       }
